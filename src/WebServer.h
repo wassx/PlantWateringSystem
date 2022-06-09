@@ -10,7 +10,7 @@ class WebServer
 {
 public:
     void init();
-    void loop();
+    void loop(float hydro);
 
 private:
     static void handle_Root();

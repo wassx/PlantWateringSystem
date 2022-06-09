@@ -5,19 +5,21 @@
 WifiMgr wifimgr;
 WebServer websrv;
 
-void setup() {
-  wifimgr.init("", "");
+void setup()
+{
+  wifimgr.init();
   websrv.init();
   Serial.println("Init done.");
 }
 
-void loop() {
+void loop()
+{
   wifimgr.loop();
-  websrv.loop();
 
-int sensorValue = analogRead(A0);
-Serial.println(sensorValue);
-delay(100); // delay in between reads for stability
-
-
+  int sensorValue = analogRead(A0);
+  float normalization = sensorValue / 1023.0;
+  float percentage = 100 -( normalization * 100);
+  websrv.loop(percentage);
+  Serial.println(percentage);
+  delay(100); // delay in between reads for stability
 }

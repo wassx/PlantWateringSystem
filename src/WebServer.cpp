@@ -2,6 +2,8 @@
 
 ESP8266WebServer server(80);
 
+float hydration = 0.0;
+
 void WebServer::handle_Root()
 {
     server.send(200, "text/html", MAIN_page); // Send web page
@@ -24,7 +26,7 @@ void WebServer::handle_Snapshot()
     cSF(sfResult, 45);
     cSF(sfData, 100); // data to send
 
-    formatValue(sfResult, 12);
+    formatValue(sfResult, hydration);
     sfData.print(sfResult);
     sfData.print(',');
     formatValue(sfResult, 21);
@@ -56,7 +58,8 @@ void WebServer::init()
     Serial.println("HTTP server started");
 }
 
-void WebServer::loop()
+void WebServer::loop(float hydro)
 {
+    hydration = hydro;
     server.handleClient();
 }
